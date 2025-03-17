@@ -4,18 +4,24 @@
   "description": "Our app connects animal welfare organizations (ORGs) with potential adopters, making pet adoption easier and more accessible. By increasing pet visibility and simplifying communication, we help more animals find loving homes.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "tsx watch src/server.ts",
+    "start": "node build/server.js",
+    "build": "tsup src --out-dir build"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/node": "^22.13.10",
-    "tsup": "^8.4.0",
-    "typescript": "^5.8.2",
-    "tsx": "4.19.3"
+    "@types/node": "22.13.10",
+    "tsup": "8.4.0",
+    "tsx": "4.19.3",
+    "typescript": "5.8.2"
   },
   "dependencies": {
-    "fastify": "^5.2.1"
+    "@prisma/client": "6.5.0",
+    "dotenv": "16.4.7",
+    "fastify": "5.2.1",
+    "prisma": "6.5.0",
+    "zod": "3.24.2"
   }
 }
