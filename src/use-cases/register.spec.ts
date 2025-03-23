@@ -1,16 +1,21 @@
 import { InMemoryOrgsRepository } from "@/repositories/in-memory/in-memory-orgs-repository";
 import { UserAlreadyExistsError } from "./errors/alreadyExistsError";
-import { expect, describe, it} from 'vitest'
+import { expect, describe, it, beforeEach} from 'vitest'
 import { compare } from "bcryptjs";
 import { RegisterUseCase } from "./register";
 import { OrgAlreadyExistsError } from "@/repositories/org-already-exists-error";
 
-describe('Register Use Case', ()=> {
-  it('should be able to register', async () => {
-    const orgsRepository = new InMemoryOrgsRepository()
-    const registerUseCase = new RegisterUseCase(orgsRepository)
+let orgsRepository: InMemoryOrgsRepository
+let sut: RegisterUseCase
 
-    const { org } = await registerUseCase.execute({
+describe('Register Use Case', ()=> {
+  beforeEach(() => {
+    orgsRepository = new InMemoryOrgsRepository()
+    sut = new RegisterUseCase(orgsRepository)
+  })
+
+  it('should be able to register', async () => {
+    const { org } = await sut.execute({
       name: 'Org For All',
       author_name: 'John Doe',
       email: 'example@email.com',
@@ -27,10 +32,7 @@ describe('Register Use Case', ()=> {
   })
 
   it('should hash org password upon registration', async () => {
-    const orgsRepository = new InMemoryOrgsRepository()
-    const registerUseCase = new RegisterUseCase(orgsRepository)
-
-    const { org } = await registerUseCase.execute({ 
+    const { org } = await sut.execute({ 
       name: 'Org For All',
       author_name: 'John Doe',
       email: 'example@email.com',
@@ -52,12 +54,9 @@ describe('Register Use Case', ()=> {
   })
 
   it('should not be able to register with same email twice', async () => {
-    const orgsRepository = new InMemoryOrgsRepository()
-    const registerUseCase = new RegisterUseCase(orgsRepository)
-
     const email = 'example@email.com'
 
-    await registerUseCase.execute({
+    await sut.execute({
       name: 'Org For All',
       author_name: 'John Doe',
       email,
@@ -70,7 +69,8 @@ describe('Register Use Case', ()=> {
       street: 'Main St, 123'
     })
 
-    await expect(() => registerUseCase.execute({
+    await expect(() => 
+      sut.execute({
       name: 'Org For All',
       author_name: 'John Doe',
       email,
