@@ -17,16 +17,9 @@ export async function register (request: FastifyRequest, reply: FastifyReply) {
     city: z.string(),
     neighborhood: z.string(),
     street: z.string(),
-
-    latitude: z.number().refine((value) => {
-      return Math.abs(value) <= 90
-    }),
-    longitude: z.number().refine((value) => {
-      return Math.abs(value) <= 180
-    }),
   })
     
-  const { name, author_name, email, whatsapp, password, zip, state, city, neighborhood, street, latitude, longitude } = registerBodySchema.parse(request.body)
+  const { name, author_name, email, whatsapp, password, zip, state, city, neighborhood, street} = registerBodySchema.parse(request.body)
 
   try{
     const orgsRepository = new PrismaOrgsRepository()
@@ -42,9 +35,7 @@ export async function register (request: FastifyRequest, reply: FastifyReply) {
       state,
       city,
       neighborhood,
-      street,
-      latitude,
-      longitude,
+      street
     })
   } catch (err) {
     if(err instanceof OrgAlreadyExistsError) {

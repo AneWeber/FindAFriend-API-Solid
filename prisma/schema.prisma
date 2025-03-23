@@ -27,9 +27,6 @@ model Org {
   neighborhood String
   street       String
 
-  latitude  Decimal
-  longitude Decimal
-
   pets Pet[]
 
   @@map("orgs")
