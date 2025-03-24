@@ -1,5 +1,5 @@
 import { OrgsRepository } from "@/repositories/orgs-repository";
-import { OrgAlreadyExistsError } from "@/repositories/org-already-exists-error";
+import { OrgAlreadyExistsError } from "./errors/alreadyExistsError";
 import { Org } from "@prisma/client";
 import bcrypt from "bcryptjs";
 
@@ -35,20 +35,18 @@ export class RegisterUseCase {
     neighborhood,
     street
   }: RegisterUseCaseRequest): Promise<RegisterUseCaseResponse> {
-    const salt = await bcrypt.genSalt(6)
-    const password_hash = await bcrypt.hash(password, salt)
-
+    
     const orgWithSameEmail = await this.orgsRepository.findByEmail(email)
-
-    if (orgWithSameEmail) {
-      throw new OrgAlreadyExistsError()
-    }
   
+    if (orgWithSameEmail) throw new OrgAlreadyExistsError()
+      
+    const password_hash = await bcrypt.hash(password, await bcrypt.genSalt(6))
+
     const org = await this.orgsRepository.create({
         name,
         author_name,
         email,
-        whatsapp,
+        whatsapp, 
         password_hash,
         zip,
         state,

@@ -49,7 +49,7 @@ describe('Authenticate Use Case', () => {
       street: 'Main St, 123'
     })
 
-    expect(() =>
+    await expect(() =>
       sut.execute({
         email: 'example2@email.com',
         password: 'securePass123',
@@ -71,7 +71,7 @@ describe('Authenticate Use Case', () => {
       street: 'Main St, 123'
     })
 
-    expect(() =>
+    await expect(() =>
       sut.execute({
         email: 'example@email.com',
         password: 'securePass333',
