@@ -1,4 +1,4 @@
-import { PrismaOrgsRepository } from "@/repositories/prisma/prisma-users-repository";
+import { PrismaOrgsRepository } from "@/repositories/prisma/prisma-orgs-repository";
 import { AuthenticateUseCase } from "@/use-cases/authenticate";
 
 export function makeAuthenticateUseCase() {
