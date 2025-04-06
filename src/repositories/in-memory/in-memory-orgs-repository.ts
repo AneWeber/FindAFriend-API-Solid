@@ -25,6 +25,12 @@ export class InMemoryOrgsRepository implements OrgsRepository {
     return org
   }
 
+  async findManyByCity(city: string, page: number) {
+    return this.items
+      .filter((item) => item.city.includes(city))
+      .slice((page - 1) * 20, page * 20)
+  }
+
   async create(data: Prisma.OrgCreateInput){
     const org = {
       name: data.name,

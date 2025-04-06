@@ -1,5 +1,5 @@
 import fastify from "fastify";
-import { orgsRoutes } from "./http/controllers/orgs/routes"; 
+import { orgsRoutes } from "./http/controllers/orgs/orgs-routes"; 
 import { ZodError } from 'zod'
 import { env } from '@/env'
 

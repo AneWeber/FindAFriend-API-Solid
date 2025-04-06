@@ -4,6 +4,7 @@ import crypto from 'node:crypto'
 type Overwrite = {
   password?: string,
   email?: string,
+  city?: string,
 }
 
 export function makeOrg(overwrite?: Overwrite) {
@@ -16,7 +17,7 @@ export function makeOrg(overwrite?: Overwrite) {
     password: overwrite?.password ?? faker.internet.password(),
     zip: faker.location.zipCode(),
     state: faker.location.state(),
-    city: faker.location.city(),
+    city: overwrite?.city ?? faker.location.city(),
     neighborhood: faker.location.streetAddress(),
     street: faker.location.street(),
   }
@@ -32,7 +33,7 @@ export function makeOrgWithPasswordHash(overwrite?: Overwrite) {
     password_hash: overwrite?.password ?? faker.internet.password(),
     zip: faker.location.zipCode(),
     state: faker.location.state(),
-    city: faker.location.city(),
+    city: overwrite?.city ?? faker.location.city(),
     neighborhood: faker.location.streetAddress(),
     street: faker.location.street(),
   }

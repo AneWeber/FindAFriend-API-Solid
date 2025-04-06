@@ -10,7 +10,7 @@
     "build": "tsup src --out-dir build",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui --api 9527"
   },
   "keywords": [],
   "author": "",

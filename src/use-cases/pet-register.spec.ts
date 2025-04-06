@@ -12,8 +12,8 @@ describe('Create Pet Use Case', ()=> {
   let sut: PetRegisterUseCase
 
   beforeEach(() => {
-    petsRepository = new InMemoryPetsRepository()
     orgsRepository = new InMemoryOrgsRepository()
+    petsRepository = new InMemoryPetsRepository(orgsRepository)
     sut = new PetRegisterUseCase(petsRepository, orgsRepository)
   })
   
