@@ -1,7 +1,7 @@
 import { OrgsRepository } from "@/repositories/orgs-repository"
 import { InvalidCredentialsError } from '@/use-cases/errors/invalid-credentials-error'
-import { Org } from "@prisma/client"
 import { compare } from "bcryptjs"
+import { sanitizeOrg, OrgDTO } from '@/utils/sanitize-org'
 
 interface AuthenticateUseCaseRequest {
   email: string
@@ -9,7 +9,7 @@ interface AuthenticateUseCaseRequest {
 }
 
 interface AuthenticateUseCaseResponse {
-  org: Org
+  org: OrgDTO
 }
 
 export class AuthenticateUseCase {
@@ -25,14 +25,14 @@ export class AuthenticateUseCase {
       throw new InvalidCredentialsError()
     }
 
-    const doestPasswordMatches = await compare(password, org.password_hash)
+    const passwordMatches = await compare(password, org.password_hash)
 
-    if (!doestPasswordMatches) {
+    if (!passwordMatches) {
       throw new InvalidCredentialsError()
     }
 
     return {
-      org,
+      org: sanitizeOrg(org),
     }
   }
 }

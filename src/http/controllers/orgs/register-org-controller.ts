@@ -1,49 +1,39 @@
 import { FastifyRequest, FastifyReply } from "fastify"
 import { z } from 'zod'
-import { RegisterUseCase } from "@/use-cases/register"
-import { PrismaOrgsRepository } from "@/repositories/prisma/prisma-orgs-repository"
+
+import { makeRegisterUseCase } from "@/use-cases/factories/make-register-use-case";
 import { OrgAlreadyExistsError } from "@/use-cases/errors/org-already-exists-error";
 
-export async function registerOrgController (request: FastifyRequest, reply: FastifyReply) {
-  const registerBodySchema = z.object({
-    name: z.string(),
-    author_name: z.string(),
-    email: z.string().email(),
-    whatsapp: z.string(),
-    password: z.string().min(6),
+const registerBodySchema = z.object({
+  name: z.string(),
+  author_name: z.string(),
+  email: z.string().email(),
+  whatsapp: z.string(),
+  password: z.string().min(6),
+  
+  zip: z.string(),
+  state: z.string(),
+  city: z.string(),
+  neighborhood: z.string(),
+  street: z.string(),
+})
+
+export async function registerOrgController (
+  request: FastifyRequest, 
+  reply: FastifyReply
+) {
     
-    zip: z.string(),
-    state: z.string(),
-    city: z.string(),
-    neighborhood: z.string(),
-    street: z.string(),
-  })
-    
-  const { name, author_name, email, whatsapp, password, zip, state, city, neighborhood, street} = registerBodySchema.parse(request.body)
+  const body = registerBodySchema.parse(request.body)
+
+  const registerOrgUseCase = makeRegisterUseCase()
 
   try{
-    const orgsRepository = new PrismaOrgsRepository()
-    const registerUseCase = new RegisterUseCase(orgsRepository)
+    const { org } = await registerOrgUseCase.execute(body)
 
-    await registerUseCase.execute({
-      name,
-      author_name,
-      email,
-      whatsapp,
-      password,
-      zip,
-      state,
-      city,
-      neighborhood,
-      street
-    })
+    return reply.status(201).send(org)
   } catch (err) {
     if(err instanceof OrgAlreadyExistsError) {
-      return reply.status(409).send({message: err.message})
+      return reply.status(400).send({message: err.message})
     }
-    
-    throw err
   }
-  
-  return reply.status(201).send()
 }

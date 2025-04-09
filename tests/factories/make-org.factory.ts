@@ -3,6 +3,7 @@ import crypto from 'node:crypto'
 
 type Overwrite = {
   password?: string,
+  password_hash?: string,
   email?: string,
   city?: string,
 }
@@ -30,7 +31,7 @@ export function makeOrgWithPasswordHash(overwrite?: Overwrite) {
     author_name: faker.person.fullName(),
     email: overwrite?.email ?? faker.internet.email(),
     whatsapp: faker.phone.number(),
-    password_hash: overwrite?.password ?? faker.internet.password(),
+    password_hash: overwrite?.password_hash ?? faker.internet.password(),
     zip: faker.location.zipCode(),
     state: faker.location.state(),
     city: overwrite?.city ?? faker.location.city(),
