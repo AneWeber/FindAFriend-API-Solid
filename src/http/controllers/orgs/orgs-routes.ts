@@ -6,7 +6,7 @@ import { searchOrgController } from "./search-org-controller";
 
 export async function orgsRoutes(app:FastifyInstance) {
   app.post('/', registerOrgController)
-  app.post('/sessions', authenticateOrgController)
+  app.post('/authenticate', authenticateOrgController)
 
   app.get('/search', searchOrgController)
 }

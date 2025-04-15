@@ -21,8 +21,7 @@ const registerBodySchema = z.object({
 export async function registerOrgController (
   request: FastifyRequest, 
   reply: FastifyReply
-) {
-    
+) { 
   const body = registerBodySchema.parse(request.body)
 
   const registerOrgUseCase = makeRegisterUseCase()

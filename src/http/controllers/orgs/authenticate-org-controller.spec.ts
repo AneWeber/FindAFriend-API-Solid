@@ -15,7 +15,7 @@ describe('Authenticate (E2E)', () => {
   it('should be able to authenticate an org', async () => {
     const org = makeOrg()
     await request(app.server).post('/orgs').send(org)
-    const response = await request(app.server).post('/orgs/sessions').send({
+    const response = await request(app.server).post('/orgs/authenticate').send({
       email: org.email,
       password: org.password,
     })

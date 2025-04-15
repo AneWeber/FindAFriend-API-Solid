@@ -5,7 +5,6 @@ import { makePet } from 'tests/factories/make-pet.factory'
 import { makeOrg } from 'tests/factories/make-org.factory'
 
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { prisma } from '@/lib/prisma'
 
 describe('Register Pet (E2E)', () => {
   beforeAll(async () => {
@@ -18,15 +17,17 @@ describe('Register Pet (E2E)', () => {
 
   it('should be able to register a new pet', async () => {
     const org = makeOrg()
-
     await request(app.server).post('/orgs').send(org)
-
-    const pet = makePet({ org_id: org.id})
+    
+    const authResponse = await request(app.server)
+    .post('/orgs/authenticate')
+    .send({ email: org.email, password: org.password })
 
     const response = await request(app.server)
       .post('/orgs/pets')
+      .set('Authorization', `Bearer ${authResponse.body.token}`)
       .send(makePet())
 
-    expect(response.status).toBe(201)
+      expect(response.statusCode).toEqual(201)
   })
 })

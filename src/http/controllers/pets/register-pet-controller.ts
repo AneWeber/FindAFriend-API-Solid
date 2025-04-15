@@ -13,7 +13,10 @@ const bodySchema = z.object({
   environment: z.string(),
 })
 
-export async function registerPetController (request: FastifyRequest, reply: FastifyReply) {
+export async function registerPetController (
+  request: FastifyRequest, 
+  reply: FastifyReply
+) {
   const body = bodySchema.parse(request.body)
 
   const createPetUseCase = makePetRegisterUseCase()
