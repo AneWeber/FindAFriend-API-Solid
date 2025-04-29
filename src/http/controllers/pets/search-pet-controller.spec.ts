@@ -152,4 +152,31 @@ describe('Search Pets (E2E)', () => {
     expect(response.status).toBe(200)
     expect(response.body.pets).toHaveLength(1)
   })
+
+  it('should be able to search pets by city and name', async () => {
+    const org = makeOrg()
+
+    await request(app.server).post('/orgs').send(org)
+
+    const authResponse = await request(app.server)
+      .post('/orgs/authenticate')
+      .send({ email: org.email, password: org.password })
+
+    await request(app.server)
+      .post('/orgs/pets')
+      .set('Authorization', `Bearer ${authResponse.body.token}`)
+      .send(makePet({ name: 'Gaia' }))
+
+    await request(app.server)
+      .post('/orgs/pets')
+      .set('Authorization', `Bearer ${authResponse.body.token}`)
+      .send(makePet({ name: 'Maia' }))
+
+    const response = await request(app.server)
+      .get('/orgs/pets')
+      .query({ city: org.city, name: 'Maia' })
+
+    expect(response.status).toBe(200)
+    expect(response.body.pets).toHaveLength(1)
+  })
 })

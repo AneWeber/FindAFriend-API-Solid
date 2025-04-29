@@ -31,45 +31,29 @@ describe('Authenticate Use Case', () => {
   })
 
   it('should not be able to authenticate with wrong email', async () => {
-    await orgsRepository.create({
-      name: 'Org For All',
-      author_name: 'John Doe',
-      email: 'example@email.com',
-      whatsapp: '1234567890',
-      password_hash: await bcrypt.hash('securePass123', await bcrypt.genSalt(6)),
-      zip: '12345-678',
-      state: 'California',
-      city: 'Los Angeles',
-      neighborhood: 'Downtown',
-      street: 'Main St, 123'
-    })
+    const email = 'example@email.com'
+    const org = await orgsRepository.create(
+      makeOrgWithPasswordHash({ email: email })
+    )
 
     await expect(() =>
       sut.execute({
         email: 'example2@email.com',
-        password: 'securePass123',
+        password: org.password_hash
       }),
     ).rejects.toBeInstanceOf(InvalidCredentialsError)
   })
 
   it('should not be able to authenticate with wrong password', async () => {
-    await orgsRepository.create({
-      name: 'Org For All',
-      author_name: 'John Doe',
-      email: 'example@email.com',
-      whatsapp: '1234567890',
-      password_hash: await bcrypt.hash('securePass123', await bcrypt.genSalt(6)),
-      zip: '12345-678',
-      state: 'California',
-      city: 'Los Angeles',
-      neighborhood: 'Downtown',
-      street: 'Main St, 123'
-    })
+    const password = 'secure123'
+    const org = await orgsRepository.create(
+      makeOrgWithPasswordHash({ password_hash: await bcrypt.hash(password, await bcrypt.genSalt(6))})
+    )
 
     await expect(() =>
       sut.execute({
-        email: 'example@email.com',
-        password: 'securePass333',
+        email: org.email,
+        password: 'NOTsecure123'
       }),
     ).rejects.toBeInstanceOf(InvalidCredentialsError)
   })

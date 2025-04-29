@@ -3,6 +3,7 @@ import crypto from 'node:crypto'
 
 type Overwrite = {
   org_id?: string
+  name?: string
   age?: string
   size?: string
   energy_level?: string
@@ -12,7 +13,7 @@ type Overwrite = {
 export function makePet(overwrite?: Overwrite) {
   return {
     id: crypto.randomUUID(),
-    name: faker.animal.petName(),
+    name: overwrite?.name ?? faker.animal.petName(),
     about: faker.animal.type(),
     age: overwrite?.age ?? faker.number.int(18).toString(),
     size: overwrite?.size ?? faker.helpers.arrayElement(['small', 'medium', 'large']),

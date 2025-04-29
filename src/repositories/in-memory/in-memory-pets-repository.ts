@@ -33,7 +33,7 @@ export class InMemoryPetsRepository implements PetsRepository {
     
     return pet
   }
-
+  
   async findManyByOrgId(orgId: string, page: number): Promise<Pet[] | null> {
     return this.items
     .filter((pet) => pet.org_id === orgId)
@@ -49,8 +49,9 @@ export class InMemoryPetsRepository implements PetsRepository {
       .filter((item) => orgsByCity.some((org) => org.id === item.org_id))
       .filter((item) => (params.age ? item.age === params.age : true))
       .filter((item) => (params.size ? item.size === params.size : true))
-      .filter((item) => (params.energy_level ? item.energy_level === params.size : true))
-      .filter((item) => (params.environment ? item.environment === params.size : true))
+      .filter((item) => (params.energy_level ? item.energy_level === params.energy_level : true))
+      .filter((item) => (params.environment ? item.environment === params.environment : true))
+      .filter((item) => (params.name ? item.name === params.name : true))
 
       return pets
   }

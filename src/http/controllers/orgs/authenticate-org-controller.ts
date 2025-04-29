@@ -31,6 +31,7 @@ export async function authenticateOrgController(
     )
 
     const refreshToken = await reply.jwtSign(
+      {},
       {
         sign: {
           sub: org.id,
