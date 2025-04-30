@@ -28,8 +28,12 @@ jobs:
       - run: npm ci
 
       - run: npx prisma generate
+      
+      - run: |
+          nohup npm run dev > server.log &
+          sleep 10
 
       - run: npm run test:e2e
         env:
           JWT_SECRET: testing
-          DATABASE_URL: "postgresql://docker:docker@localhost:5432/findafriend?schema=public"
+          DATABASE_URL: "postgresql://docker:docker@127.0.0.1:5432/findafriend?schema=public"
