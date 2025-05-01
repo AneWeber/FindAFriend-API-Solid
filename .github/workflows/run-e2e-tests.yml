@@ -35,7 +35,8 @@ jobs:
 
       - name: Set environment Variables
         env:
-          DATABASE_URL: "postgresql://docker:docker@localhost:5432/findafriend?schema=public"
+          DATABASE_URL: "postgresql://docker:docker@localhost:5432/findafriend"
+          JWT_SECRET: testing
         run: echo "Environment variables set"
 
       - name: Run database migrations
@@ -43,6 +44,3 @@ jobs:
 
       - name: Run tests
         run: npm run test:e2e
-        env:
-          JWT_SECRET: testing
-          DATABASE_URL: "postgresql://docker:docker@localhost:5432/findafriend?schema=public"
