@@ -10,39 +10,26 @@ jobs:
     services:
       postgres:
         image: bitnami/postgresql
+        ports:
+          - 5432:5432
         env:
           POSTGRESQL_USERNAME: docker
           POSTGRESQL_PASSWORD: docker
           POSTGRESQL_DATABASE: findafriend
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd "pg_isready -U postgres"
-          --health-interval 10s
-          --health-interval 5s
-          --health-retries 5
 
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: 22
+          node-version: 20
+          cache: 'npm'
 
-      - name: Install dependencies
-        run: npm install
+      - run: npm ci
 
-      - name: Set environment Variables
-        env:
-          DATABASE_URL: "postgresql://docker:docker@localhost:5432/findafriend"
-        run: echo "Environment variables set"
+      - run: npx prisma generate
 
-      - name: Run database migrations
-        run: npx prisma migrate deploy
-
-      - name: Run tests
-        run: npm run test:e2e
+      - run: npm run test:e2e
         env:
           JWT_SECRET: testing
           DATABASE_URL: "postgresql://docker:docker@localhost:5432/findafriend?schema=public"
