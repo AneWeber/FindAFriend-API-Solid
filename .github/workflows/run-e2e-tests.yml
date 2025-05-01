@@ -33,9 +33,13 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Set up database
-        run: |
-          npx prisma migrate deploy
+      - name: Set environment Variables
+        env:
+          DATABASE_URL: "postgresql://docker:docker@localhost:5432/findafriend"
+        run: echo "Environment variables set"
+
+      - name: Run database migrations
+        run: npx prisma migrate deploy
 
       - name: Run tests
         run: npm run test:e2e
