@@ -62,7 +62,7 @@ describe('Search Pets (E2E)', () => {
     await request(app.server)
       .post('/orgs/pets')
       .set('Authorization', `Bearer ${authResponse.body.token}`)
-      .send(makePet())
+      .send(makePet({ age: '2' }))
 
     const response = await request(app.server)
       .get('/orgs/pets')
