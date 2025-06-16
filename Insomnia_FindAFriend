@@ -1,0 +1,256 @@
+type: collection.insomnia.rest/5.0
+name: API FindAFriend
+meta:
+  id: wrk_886813a03a374810a9a84af0e0a90b99
+  created: 1742453848374
+  modified: 1742453848374
+  description: ""
+collection:
+  - url: http://localhost:3333/orgs
+    name: Create ORG
+    meta:
+      id: req_28b7173c3bbb49859b0e9464a2feda2d
+      created: 1742453848390
+      modified: 1750055932172
+      isPrivate: false
+      description: ""
+      sortKey: -1741591979034
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "name": "Happy Tails",
+          "author_name": "Mateo",
+          "email": "happytails@email.com",
+          "whatsapp": "88776655",
+          "password": "pawSafe456",
+          "zip": "987654",
+          "state": "lowlands",
+          "city": "sunnyville",
+          "neighborhood": "green park",
+          "street": "tail wag road",
+          "latitude": 36.102345,
+          "longitude": 14.401567
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/10.3.1
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:3333/orgs/authenticate
+    name: Authenticate ORG
+    meta:
+      id: req_e3dcddb184d94c98949f811fb6b754c2
+      created: 1742453848400
+      modified: 1750055945463
+      isPrivate: false
+      description: ""
+      sortKey: -1741591978984
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "email": "happytails@email.com",
+          "password": "pawSafe456"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/10.3.1
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:3333/orgs/pets/2e1f1698-89be-4d40-ad73-ecedaae4bc8f
+    name: GET PET
+    meta:
+      id: req_b51b30db6bfb4f539d74db18b7c751ac
+      created: 1742453848406
+      modified: 1750056018612
+      isPrivate: false
+      description: ""
+      sortKey: -1741240471097
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication:
+      type: none
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:3333/orgs/token/refresh
+    name: Refresh token
+    meta:
+      id: req_d4a0c1fc65ae40b2a6c131490c75cdbe
+      created: 1742453848410
+      modified: 1750056002550
+      isPrivate: false
+      description: ""
+      sortKey: -1741589799745
+    method: PATCH
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "email": "happytails@email.com",
+          "password": "pawSafe456"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/10.3.1
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:3333/orgs/pets
+    name: Create PET
+    meta:
+      id: req_6676617f01b34d02a3db3c712ece3a0e
+      created: 1742453848414
+      modified: 1750055982707
+      isPrivate: false
+      description: ""
+      sortKey: -1741591978934
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "name": "luna",
+          "about": "playful and gentle girl",
+          "age": "3",
+          "size": "medium",
+          "energy_level": "high",
+          "environment": "outdoor"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NzEwYTBkZi1hOWU0LTQ4MWItYThlZC1iZmFhMzEzYzgzNjIiLCJpYXQiOjE3NTAwNTU5NDYsImV4cCI6MTc1MDA1NjU0Nn0.wXMt6apcRLYWkxIZ9SARN9_7oopDuOyiKcD_5UP41Bo
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:3333/orgs/pets
+    name: Search PET
+    meta:
+      id: req_c95c5a49a13f4e2b9ea543cd899ef4dd
+      created: 1745574805035
+      modified: 1750056053180
+      isPrivate: false
+      description: ""
+      sortKey: -1740779644121.5
+    method: GET
+    parameters:
+      - id: pair_6c42400d56874e5fb794848d98df1430
+        name: city
+        value: sunnyville
+        description: ""
+        disabled: false
+      - id: pair_8869390746134d0990f8bdac13b4aa78
+        name: age
+        value: "3"
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication:
+      type: none
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:3333/orgs/search
+    name: Search ORG
+    meta:
+      id: req_a86a34f7f54643739564ade841ff684b
+      created: 1745590687366
+      modified: 1750056068702
+      isPrivate: false
+      description: ""
+      sortKey: -1740549230633.75
+    method: GET
+    parameters:
+      - id: pair_6c42400d56874e5fb794848d98df1430
+        name: q
+        value: sunnyville
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication:
+      type: none
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_8841eae147274f32a6c3229483cc0bd4
+    created: 1742453848383
+    modified: 1750056004286
+  cookies:
+    - key: refreshToken
+      value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NzEwYTBkZi1hOWU0LTQ4MWItYThlZC1iZmFhMzEzYzgzNjIiLCJpYXQiOjE3NTAwNTYwMDQsImV4cCI6MTc1MDY2MDgwNH0.iqA1x_QdmoCPlpP9-oFVl9qA21zEyOImARetmD5-bwM
+      domain: localhost
+      path: /
+      secure: true
+      httpOnly: true
+      hostOnly: true
+      creation: 2025-03-10T06:45:14.686Z
+      lastAccessed: 2025-06-16T06:40:04.286Z
+      sameSite: strict
+      id: bfef640c-da40-44e4-8758-3ace29852f54
+environments:
+  name: Base Environment
+  meta:
+    id: env_dc760e9c07094ceeb0f9d1c87c207f5b
+    created: 1742453848378
+    modified: 1742453848378
+    isPrivate: false
