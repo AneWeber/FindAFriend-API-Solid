@@ -28,11 +28,11 @@ https://github.com/user-attachments/assets/1a2482f2-2fd5-42aa-9e21-11f31ffcce56
 
 ### terminal 01:
 - npm install (install packages)
+- docker-compose up --build -d (create and execute docker)
+- npx prisma migrate dev (execute migrations)
 - npm run build (compile project)
 - npm run start (start project)
 
 ### terminal 02:
-- docker-compose up --build -d (create and execute docker)
-- npx prisma migrate dev (execute migrations)
 - npm run test:ui (run all tests)
 - *or use the Insomnia file available to test manually*
